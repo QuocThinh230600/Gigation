@@ -1,0 +1,33 @@
+
+@font-face {
+    font-family: 'gotham';
+    src: url('../fonts/SVN-Gotham.woff2') format('woff2'),
+        url('../fonts/SVN-Gotham.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+@font-face {
+    font-family: 'gotham-b';
+    src: url('../fonts/SVN-GothamBold.woff2') format('woff2'),
+        url('../fonts/SVN-GothamBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+@font-face {
+    font-family: 'gotham-book';
+    src: url('../fonts/SVN-GothamBook.woff2') format('woff2'),
+        url('../fonts/SVN-GothamBook.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}
+@font-face {
+    font-family: 'gotham-light';
+    src: url('../fonts/SVN-GothamLight.woff2') format('woff2'),
+        url('../fonts/SVN-GothamLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: fallback;
+}

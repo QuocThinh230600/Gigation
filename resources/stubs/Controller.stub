@@ -1,0 +1,172 @@
+<?php
+
+namespace App\Http\Controllers\{{namespace}};
+
+use App\Helpers\LogActivityHelper;
+use App\Http\Resources\{{controllerName}} as {{controllerName}}Resource;
+use App\Repositories\{{controllerName}}\{{controllerName}}Repository;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\{{namespace}}\{{controllerName}}\StoreRequest;
+use App\Http\Requests\{{namespace}}\{{controllerName}}\UpdateRequest;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class {{controllerName}}Controller extends Controller
+{
+    private $view   = '{{viewRoot}}.modules.{{controllerNameSnakeCase}}.';
+
+    private $route  = '{{routeRoot}}.{{controllerNameSlug}}.';
+
+    private $module = 'module.{{controllerNameSlug}}';
+
+    private ${{controllerNameCamelCase}};
+
+    /**
+     * {{controllerName}}Controller constructor.
+     * @param {{controllerName}}Repository ${{controllerNameSnakeCase}}
+     * @author Quoc Tuan
+     */
+    public function __construct({{controllerName}}Repository ${{controllerNameCamelCase}})
+    {
+        $this->middleware('permission:{{controllerNameSnakeCase}}_index', ['only' => ['show', 'index']]);
+        $this->middleware('permission:{{controllerNameSnakeCase}}_create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:{{controllerNameSnakeCase}}_edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:{{controllerNameSnakeCase}}_destroy', ['only' => ['destroy']]);
+
+        $this->{{controllerNameCamelCase}} = ${{controllerNameCamelCase}};
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return mixed
+     * @author Quoc Tuan
+     */
+    public function index()
+    {
+        $data['{{controllerNameSnakeCase}}'] = $this->{{controllerNameCamelCase}}->getAll();
+
+        if (Request::is('api*')) {
+            return new {{controllerName}}Resource($data['{{controllerNameSnakeCase}}']);
+        }
+
+        return view($this->view. 'index', $data);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return mixed
+     * @author Quoc Tuan
+     */
+    public function create()
+    {
+        return view($this->view. 'create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  StoreRequest  $request
+     * @return mixed
+     * @author Quoc Tuan
+     */
+    public function store(StoreRequest $request)
+    {
+        $data             = $request->except(['_token','_method']);
+        $data['status']   = ($request->status == 'on') ? 'on' : 'off';
+        $data['users_id'] = Auth::user()->id;
+        $result           = $this->{{controllerNameCamelCase}}->create($data);
+
+        LogActivityHelper::addToLog([
+            'module'      => '{{controllerNameCamelCase}}',
+            'action'      => 'create',
+            'description' => $request->name
+        ]);
+
+        return response()->json([
+            'status'   => 'success',
+            'message'  => message_module($this->module, 'crud.create_success'),
+            'redirect' => route($this->route . 'create'),
+            'result'   => array('{{controllerNameCamelCase}}' => $result)
+        ], 201);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $uuid
+     * @return mixed
+     * @author Quoc Tuan
+     */
+    public function show(string $uuid)
+    {
+        $data = $this->{{controllerNameCamelCase}}->getByUuid($uuid);
+
+        return response()->json([
+            'status' => 'success',
+            'result' => $data
+        ], 200);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  string  $uuid
+     * @return mixed
+     * @author Quoc Tuan
+     */
+    public function edit(string $uuid)
+    {
+        $data['{{controllerNameSnakeCase}}'] = $this->{{controllerNameCamelCase}}->getByUuid($uuid);
+
+        return view($this->view.'edit', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateRequest  $request
+     * @param  string  $uuid
+     * @return mixed
+     * @author Quoc Tuan
+     */
+    public function update(UpdateRequest $request, string $uuid)
+    {
+        $data             = $request->except(['_token','_method']);
+        $data['status']   = ($request->status == 'on') ? 'on' : 'off';
+        $data['users_id'] = Auth::user()->id;
+        $result           = $this->{{controllerNameCamelCase}}->update($data,$uuid);
+
+        LogActivityHelper::addToLog([
+            'module'      => '{{controllerNameCamelCase}}',
+            'action'      => 'edit',
+            'description' => $request->name
+        ]);
+
+        return response()->json([
+            'status'   => 'success',
+            'message'  => message_module($this->module, 'crud.edit_success'),
+            'redirect' => route($this->route . 'edit', ['{{controllerNameCamelCase}}' => $uuid]),
+            'result'   => array('{{controllerNameCamelCase}}' => $result)
+        ], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  string  $uuid
+     * @return mixed
+     */
+    public function destroy(string $uuid)
+    {
+        $result = $this->{{controllerNameCamelCase}}->remove($uuid);
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => message_module($this->module, 'crud.destroy_success'),
+            'result'  => $result
+        ], 200);
+    }
+}

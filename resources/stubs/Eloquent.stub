@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Repositories\{{eloquentName}};
+
+use App\Models\{{eloquentName}};
+use App\Repositories\AbstractRepository;
+
+class Eloquent{{eloquentName}} extends AbstractRepository implements {{eloquentName}}Repository
+{
+    /**
+     * @var {{eloquentName}}
+     */
+    protected $model;
+
+    /**
+     * Eloquent{{eloquentName}} constructor.
+     *
+     * @param {{eloquentName}} $model
+     * @author Quoc Tuan
+     */
+    public function __construct({{eloquentName}} $model)
+    {
+        $this->model = $model;
+    }
+}

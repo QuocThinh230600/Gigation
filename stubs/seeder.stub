@@ -1,0 +1,17 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class {{ class }} extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     * @author Quốc Tuấn <contact.quoctuan@gmail.com>
+     */
+    public function run()
+    {
+        //
+    }
+}

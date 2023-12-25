@@ -1,0 +1,21 @@
+@extends('{{viewRoot}}.master')
+@section('module', module('{{viewNameSlug}'))
+@section('action', behavior('action.edit'))
+@section('title', title_module('{{viewNameSlug}','edit'))
+
+@canany(['{{viewNameSnakeCase}}_index', '{{viewNameSnakeCase}}_edit', '{{viewNameSnakeCase}}_destroy'])
+    @section('index',route('{{viewRoot}}.{{viewNameSlug}}.index'))
+@endcanany
+
+@push('themejs')
+
+@endpush
+
+@section('content')
+<form action="{{ route('{{routeRoot}}.{{viewNameSlug}}.update',['{{viewNameSnakeCase}}' => ${{viewNameSnakeCase}}->uuid]) }}) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+
+
+</form>
+@endsection

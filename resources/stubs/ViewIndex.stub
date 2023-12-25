@@ -1,0 +1,17 @@
+@extends('{{viewRoot}}.master')
+@section('module', module('{{viewNameSlug}'))
+@section('action', behavior('action.index'))
+@section('title', title_module('{{viewNameSlug}','index'))
+
+@canany(['{{viewNameSnakeCase}}_index', '{{viewNameSnakeCase}}_edit', '{{viewNameSnakeCase}}_destroy'])
+    @section('index',route('{{viewRoot}}.{{viewNameSlug}}.index'))
+@endcanany
+
+@push('themejs')
+
+@endpush
+
+@section('content')
+
+
+@endsection

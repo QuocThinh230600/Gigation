@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Repositories\{{repositoryName}};
+
+use App\Repositories\AbstractInterface;
+
+interface {{repositoryName}}Repository extends AbstractInterface
+{
+
+}

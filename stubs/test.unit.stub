@@ -1,0 +1,19 @@
+<?php
+
+namespace {{ namespace }};
+
+use PHPUnit\Framework\TestCase;
+
+class {{ class }} extends TestCase
+{
+    /**
+     * A basic unit test example.
+     *
+     * @return void
+     * @author Quốc Tuấn <contact.quoctuan@gmail.com>
+     */
+    public function testExample()
+    {
+        $this->assertTrue(true);
+    }
+}

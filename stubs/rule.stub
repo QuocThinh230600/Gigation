@@ -1,0 +1,43 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Contracts\Validation\Rule;
+
+class {{ class }} implements Rule
+{
+    /**
+     * Create a new rule instance.
+     *
+     * @return void
+     * @author Quốc Tuấn <contact.quoctuan@gmail.com>
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Determine if the validation rule passes.
+     *
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @return bool
+     * @author Quốc Tuấn <contact.quoctuan@gmail.com>
+     */
+    public function passes($attribute, $value)
+    {
+        //
+    }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     * @author Quốc Tuấn <contact.quoctuan@gmail.com>
+     */
+    public function message()
+    {
+        return 'The validation error message.';
+    }
+}

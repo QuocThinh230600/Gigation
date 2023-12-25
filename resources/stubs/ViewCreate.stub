@@ -1,0 +1,21 @@
+@extends('{{viewRoot}}.master')
+@section('module', module('{{viewNameSlug}'))
+@section('action', behavior('action.create'))
+@section('title', title_module('{{viewNameSlug}','create'))
+
+@canany(['{{viewNameSnakeCase}}_index', '{{viewNameSnakeCase}}_edit', '{{viewNameSnakeCase}}_destroy'])
+    @section('index',route('{{viewRoot}}.{{viewNameSlug}}.index'))
+@endcanany
+
+@push('themejs')
+
+@endpush
+
+@section('content')
+<form action="{{ route('{{routeRoot}}.{{viewNameSlug}}.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('POST')
+
+
+</form>
+@endsection
